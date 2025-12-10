@@ -24,3 +24,14 @@ Use in HLS.js on bd71.vercel.app:
 ```js
 hls.loadSource("https://saath-tau.vercel.app/master.m3u8?u=" + encodeURIComponent("https://app24.jagobd.com.bd/.../mono.m3u8"));
 hls.attachMedia(video);
+---
+
+## Deploy notes / troubleshooting
+- **Origin/Referer:** Make sure your player page is served from `https://bd71.vercel.app` so browser sends correct headers. If you serve locally (`http://localhost:8080`) Origin will fail.
+- **CORS:** Proxy adds `Access-Control-Allow-Origin: https://bd71.vercel.app` on responses.
+- **Large segments:** The code uses `arrayBuffer()` — works fine for typical segment sizes. If you want streaming passthrough (lower RAM), I can convert to streaming implementation.
+- **Timeouts / cold starts:** Vercel serverless has time limits—if upstream is slow, may fail. Consider caching headers or edge functions for heavy load.
+- **If 403 appears:** Confirm Referer/Origin exactly matches (including trailing slash differences). Browser often sets `referer` including the page path — our code checks `startsWith(ALLOWED)` so `https://bd71.vercel.app/anything` is fine.
+
+---
+
