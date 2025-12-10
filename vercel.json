@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "routes": [
+    { "src": "/master.m3u8", "dest": "/api/master" },
+    { "src": "/api/segment", "dest": "/api/segment" },
+    { "src": "/api/key", "dest": "/api/key" }
+  ]
+}
